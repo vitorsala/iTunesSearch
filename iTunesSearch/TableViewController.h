@@ -13,7 +13,8 @@
 @property (strong, nonatomic) IBOutlet UIView *view;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UITextField *textoBusca;
 
+- (IBAction)buscar:(id)sender;
 @end
 
