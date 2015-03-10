@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TableViewController">
             <connections>
+                <outlet property="btnBuscar" destination="hJm-fL-vbt" id="caL-yJ-f8k"/>
                 <outlet property="tableview" destination="Ef8-KK-GXi" id="DTN-iz-mHS"/>
                 <outlet property="textoBusca" destination="Sbh-Cq-yfG" id="Sgh-dk-Tkd"/>
                 <outlet property="view" destination="m1H-gH-MbP" id="bZU-vx-ZeY"/>

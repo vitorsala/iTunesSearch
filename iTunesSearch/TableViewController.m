@@ -14,6 +14,8 @@
 @interface TableViewController () {
     NSArray *midias;
     NSIndexPath *selectedRow;
+
+    NSString *language;
 }
 
 @end
@@ -33,9 +35,16 @@
 
     _tableview.dataSource = self;
     _tableview.delegate = self;
+
+    [_btnBuscar setTitle:NSLocalizedString(@"Search", @"String para o botão buscar") forState:UIControlStateNormal];
+
     
 //#warning Necessario para que a table view tenha um espaco em relacao ao topo, pois caso contrario o texto ficara atras da barra superior
 //    self.tableview.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableview.bounds.size.width, 15.f)];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+
 }
 
 - (void)didReceiveMemoryWarning {

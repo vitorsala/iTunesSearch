@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UITextField *textoBusca;
+@property (weak, nonatomic) IBOutlet UIButton *btnBuscar;
+
 
 - (IBAction)buscar:(id)sender;
 @end
