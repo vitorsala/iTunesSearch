@@ -11,7 +11,12 @@
 @implementation TableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    _genero.hidden = YES;
+    _artista.hidden = YES;
+    _duracao.hidden = YES;
+    _pais.hidden = YES;
+    _trackId.hidden = YES;
+    [self setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

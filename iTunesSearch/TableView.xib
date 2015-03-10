@@ -1,25 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TableViewController">
             <connections>
-                <outlet property="tableview" destination="z24-IP-C1d" id="fiF-7d-ri3"/>
-                <outlet property="view" destination="z24-IP-C1d" id="NXu-VO-9o4"/>
+                <outlet property="searchBar" destination="iQA-J1-QlF" id="S4z-Ao-fgR"/>
+                <outlet property="tableview" destination="Ef8-KK-GXi" id="DTN-iz-mHS"/>
+                <outlet property="view" destination="m1H-gH-MbP" id="bZU-vx-ZeY"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="z24-IP-C1d">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+        <view contentMode="scaleToFill" id="m1H-gH-MbP">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="iQA-J1-QlF">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ef8-KK-GXi">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <connections>
-                <outlet property="dataSource" destination="-1" id="grn-Rq-4Ux"/>
-                <outlet property="delegate" destination="-1" id="M2x-yu-OMO"/>
-            </connections>
-            <point key="canvasLocation" x="-135" y="440"/>
-        </tableView>
+            <constraints>
+                <constraint firstItem="iQA-J1-QlF" firstAttribute="leading" secondItem="m1H-gH-MbP" secondAttribute="leading" id="1Je-W7-Wd6"/>
+                <constraint firstAttribute="trailing" secondItem="iQA-J1-QlF" secondAttribute="trailing" id="3Fe-9H-RFM"/>
+                <constraint firstAttribute="bottom" secondItem="Ef8-KK-GXi" secondAttribute="bottom" id="7PM-BL-1XM"/>
+                <constraint firstItem="iQA-J1-QlF" firstAttribute="top" secondItem="m1H-gH-MbP" secondAttribute="top" constant="22" id="ERt-E5-BzK"/>
+                <constraint firstItem="Ef8-KK-GXi" firstAttribute="leading" secondItem="m1H-gH-MbP" secondAttribute="leading" id="HUu-K6-0sm"/>
+                <constraint firstAttribute="trailing" secondItem="Ef8-KK-GXi" secondAttribute="trailing" id="dCC-gf-qWw"/>
+                <constraint firstItem="Ef8-KK-GXi" firstAttribute="top" secondItem="iQA-J1-QlF" secondAttribute="bottom" id="teE-bB-HVx"/>
+            </constraints>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="iQA-J1-QlF"/>
+                    <exclude reference="Ef8-KK-GXi"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="1Je-W7-Wd6"/>
+                    <exclude reference="3Fe-9H-RFM"/>
+                    <exclude reference="ERt-E5-BzK"/>
+                    <exclude reference="7PM-BL-1XM"/>
+                    <exclude reference="HUu-K6-0sm"/>
+                    <exclude reference="dCC-gf-qWw"/>
+                    <exclude reference="teE-bB-HVx"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="iQA-J1-QlF"/>
+                    <include reference="Ef8-KK-GXi"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="1Je-W7-Wd6"/>
+                    <include reference="3Fe-9H-RFM"/>
+                    <include reference="ERt-E5-BzK"/>
+                    <include reference="7PM-BL-1XM"/>
+                    <include reference="HUu-K6-0sm"/>
+                    <include reference="dCC-gf-qWw"/>
+                    <include reference="teE-bB-HVx"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="-100" y="443"/>
+        </view>
     </objects>
 </document>
