@@ -12,7 +12,7 @@
 #import "Entidades/Filme.h"
 
 @interface TableViewController () {
-    NSArray *midias;
+    NSDictionary *midias;
     NSIndexPath *selectedRow;
 
     NSString *language;
@@ -31,7 +31,7 @@
     [self.tableview registerNib:nib forCellReuseIdentifier:@"celulaPadrao"];
     
     iTunesManager *itunes = [iTunesManager sharedInstance];
-    midias = [itunes buscarMidias:@"Apple"];
+//    midias = [itunes buscarMidias:@"Apple"];
 
     _tableview.dataSource = self;
     _tableview.delegate = self;
@@ -41,10 +41,6 @@
     
 //#warning Necessario para que a table view tenha um espaco em relacao ao topo, pois caso contrario o texto ficara atras da barra superior
 //    self.tableview.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableview.bounds.size.width, 15.f)];
-}
-
--(void)viewDidAppear:(BOOL)animated{
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,26 +54,55 @@
 
 #pragma mark - Metodos do UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [midias count];
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return [[midias allKeys] objectAtIndex:section];
+}
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [midias count];
+    return [[midias objectForKey:[[midias allKeys] objectAtIndex:section]] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewCell *celula = [self.tableview dequeueReusableCellWithIdentifier:@"celulaPadrao"];
     
-    Filme *filme = [midias objectAtIndex:indexPath.row];
+    Entity *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
-    [celula.nome setText:filme.nome];
-    [celula.tipo setText:@"Filme"];
+    [celula.nome setText:midia.nome];
+    [celula.tipo setText:midia.tipo];
+
+
+    if(selectedRow && indexPath.row == selectedRow.row && indexPath.section == selectedRow.section){
+
+        celula.label01.text = midia.pais;
+        celula.label02.text = @"test2";
+        celula.label03.text = @"test3";
+        celula.label04.text = @"test4";
+        celula.label05.text = @"test5";
+
+        [celula label01].hidden = NO;
+        [celula label02].hidden = NO;
+        [celula label03].hidden = NO;
+        [celula label04].hidden = NO;
+        [celula label05].hidden = NO;
+    }
+    else{
+
+        [celula label01].hidden = YES;
+        [celula label02].hidden = YES;
+        [celula label03].hidden = YES;
+        [celula label04].hidden = YES;
+        [celula label05].hidden = YES;
+    }
     
     return celula;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(selectedRow && indexPath.row == selectedRow.row){
+    if(selectedRow && indexPath.row == selectedRow.row && indexPath.section == selectedRow.section){
         return 220;
     }
     return 70;
@@ -86,47 +111,52 @@
 #pragma mark - Metodos do UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(selectedRow && indexPath.row == selectedRow.row && indexPath.section == selectedRow.section){
+        [self tableView:tableView didDeselectRowAtIndexPath:indexPath];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
+
     selectedRow = indexPath;
 
     if([midias count] > 0){
         [tableView beginUpdates];
         [tableView endUpdates];
-        TableViewCell *cell = (TableViewCell *)[self.tableview cellForRowAtIndexPath:indexPath];
+        TableViewCell *cell = (TableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSNumberFormatter *f = [[NSNumberFormatter alloc]init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
 
-        Filme *filme = [midias objectAtIndex:indexPath.row];
+        Entity *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
-        
+        cell.label01.text = midia.pais;
+        cell.label02.text = @"test2";
+        cell.label03.text = @"test3";
+        cell.label04.text = @"test4";
+        cell.label05.text = @"test5";
 
-        cell.genero.text = filme.genero;
-        cell.artista.text = filme.artista;
-        cell.duracao.text = [NSString stringWithFormat:@"%@",filme.duracao];
-        cell.pais.text = filme.pais;
-        cell.trackId.text = [NSString stringWithFormat:@"%@",filme.trackId];
-
-        [cell genero].hidden = NO;
-        [cell artista].hidden = NO;
-        [cell duracao].hidden = NO;
-        [cell pais].hidden = NO;
-        [cell trackId].hidden = NO;
+        [cell label01].hidden = NO;
+        [cell label02].hidden = NO;
+        [cell label03].hidden = NO;
+        [cell label04].hidden = NO;
+        [cell label05].hidden = NO;
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
     selectedRow = nil;
     if([midias count] > 0){
-        TableViewCell *cell = (TableViewCell *)[self.tableview cellForRowAtIndexPath:indexPath];
+        TableViewCell *cell = (TableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
 
         [tableView beginUpdates];
         [tableView endUpdates];
 
-        [cell genero].hidden = YES;
-        [cell artista].hidden = YES;
-        [cell duracao].hidden = YES;
-        [cell pais].hidden = YES;
-        [cell trackId].hidden = YES;
+        [cell label01].hidden = YES;
+        [cell label02].hidden = YES;
+        [cell label03].hidden = YES;
+        [cell label04].hidden = YES;
+        [cell label05].hidden = YES;
     }
 }
 
@@ -140,6 +170,10 @@
     midias = [itunes buscarMidias:search];
     [_tableview reloadData];
 
-
 }
+
+//#pragma mark outros métodos
+//-(void) setCellContent:(UITableCell *)cell withContent:(NSArray *)data{
+//
+//}
 @end

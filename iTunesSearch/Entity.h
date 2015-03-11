@@ -7,13 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Entity.h"
 
 @interface Entity : NSObject
 
+@property (nonatomic, strong) NSString *tipo;
 @property (nonatomic, strong) NSString *nome;
 @property (nonatomic, strong) NSString *pais;
+@property (nonatomic, strong) NSString *preco;
 @property (nonatomic, strong) NSString *trackId;
+@property (nonatomic, strong) NSString *data;
 @property (nonatomic, strong) NSString *imgUrl;
 
 @end

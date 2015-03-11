@@ -11,11 +11,6 @@
 @implementation TableViewCell
 
 - (void)awakeFromNib {
-    _genero.hidden = YES;
-    _artista.hidden = YES;
-    _duracao.hidden = YES;
-    _pais.hidden = YES;
-    _trackId.hidden = YES;
     [self setBackgroundColor:[UIColor whiteColor]];
 }
 

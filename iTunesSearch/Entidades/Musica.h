@@ -12,7 +12,10 @@
 @interface Musica : Entity
 
 @property (nonatomic, strong) NSString *artista;
+@property (nonatomic, strong) NSString *colecao;
 @property (nonatomic, strong) NSString *numFaixas;
+@property (nonatomic, strong) NSString *numDaFaixa;
 @property (nonatomic, strong) NSString *data;
+
 
 @end

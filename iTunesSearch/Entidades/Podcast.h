@@ -13,6 +13,5 @@
 
 @property (nonatomic, strong) NSString *artista;
 @property (nonatomic, strong) NSString *colecao;
-@property (nonatomic, strong) NSString *data;
 
 @end
