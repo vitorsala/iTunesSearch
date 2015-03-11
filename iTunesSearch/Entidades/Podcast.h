@@ -7,15 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Entity.h"
 
-@interface Podcast : NSObject
+@interface Podcast : Entity
 
-@property (nonatomic, strong) NSString *nome;
-@property (nonatomic, strong) NSString *trackId;
 @property (nonatomic, strong) NSString *artista;
 @property (nonatomic, strong) NSString *colecao;
 @property (nonatomic, strong) NSString *data;
-@property (nonatomic, strong) NSString *pais;
-@property (nonatomic, strong) NSString *imgUrl;
 
 @end

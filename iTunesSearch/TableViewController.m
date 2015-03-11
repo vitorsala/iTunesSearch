@@ -36,7 +36,7 @@
     _tableview.dataSource = self;
     _tableview.delegate = self;
 
-    [_btnBuscar setTitle:NSLocalizedString(@"Search", @"String para o botão buscar") forState:UIControlStateNormal];
+//    [_btnBuscar setTitle:NSLocalizedString(@"Search", @"String para o botão buscar") forState:UIControlStateNormal];
 
     
 //#warning Necessario para que a table view tenha um espaco em relacao ao topo, pois caso contrario o texto ficara atras da barra superior
@@ -96,6 +96,8 @@
         f.numberStyle = NSNumberFormatterDecimalStyle;
 
         Filme *filme = [midias objectAtIndex:indexPath.row];
+
+        
 
         cell.genero.text = filme.genero;
         cell.artista.text = filme.artista;

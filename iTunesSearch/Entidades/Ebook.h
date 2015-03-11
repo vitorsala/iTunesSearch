@@ -7,15 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Entity.h"
 
-@interface Ebook : NSObject
+@interface Ebook : Entity
 
-@property (nonatomic, strong) NSString *titulo;
 @property (nonatomic, strong) NSString *autor;
 @property (nonatomic, strong) NSString *descricao;
 @property (nonatomic, strong) NSArray *generos;
 @property (nonatomic, strong) NSString *data;
-@property (nonatomic, strong) NSString *pais;
-@property (nonatomic, strong) NSString *imgUrl;
 
 @end
