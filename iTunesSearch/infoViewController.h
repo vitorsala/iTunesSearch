@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Entity.h"
+#import "Midia.h"
 @interface infoViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *txtNome;

@@ -14,6 +14,7 @@
 #import "Entidades/Ebook.h"
 #import "Entidades/Musica.h"
 #import "Entidades/Podcast.h"
+#import "LoadingAlert.h"
 
 
 @interface TableViewController () {
@@ -22,7 +23,7 @@
 
     NSString *language;
 
-    UIAlertView *loadingAlert;
+    LoadingAlert *loadingAlert;
     NSUserDefaults *userDefault;
     void (^setLabelHidden)(TableViewCell *, BOOL);
     UIActivityIndicatorView *activity;
@@ -42,10 +43,7 @@
     iTunesManager *itunes = [iTunesManager sharedInstance];
     [itunes.notifCenter addObserver:self selector:@selector(tableUpdate:) name:@"iTunesManagerDisFinishedSearch" object:itunes];
 
-
-
-
-//    midias = [itunes buscarMidias:@"Apple"];
+//    [self.view insertSubview:_tableview belowSubview:self.view];
     _tableview.dataSource = self;
     _tableview.delegate = self;
 
@@ -63,6 +61,9 @@
         [celula label04].hidden = hidden;
         [celula label05].hidden = hidden;
     };
+
+
+    loadingAlert = [[LoadingAlert alloc]initWithTitle:@"Realizando busca" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
 
     userDefault = [NSUserDefaults standardUserDefaults];
     _textoBusca.text = [userDefault objectForKey:@"lastSearch"];
@@ -106,7 +107,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TableViewCell *celula = [self.tableview dequeueReusableCellWithIdentifier:@"celulaPadrao"];
     
-    Entity *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Midia *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
     [celula.nome setText:midia.nome];
     [celula.tipo setText:midia.tipo];
@@ -211,7 +212,7 @@
         NSNumberFormatter *f = [[NSNumberFormatter alloc]init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
 
-        Entity *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Midia *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
         void (^sharedLabel)(NSString*, NSString*, NSString*) = ^void(NSString* lbl1, NSString* lbl2, NSString* lbl3){
             cell.label03.text = lbl1;
@@ -306,18 +307,7 @@
 }
 
 -(void)showAlert {
-    loadingAlert = [[UIAlertView alloc]initWithTitle:@"Realizando busca" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
-
-    activity = [[UIActivityIndicatorView alloc]
-                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-
-    activity.frame = loadingAlert.bounds;
-//    activity.center = CGPointMake(loadingAlert.bounds.size.width / 2, loadingAlert.bounds.size.height - 50);
-    [loadingAlert addSubview:activity];
-    //    [loadingAlert setValue:activity forKey:@"accessoryView"];
     [loadingAlert show];
-    [activity startAnimating];
-    
 }
 
 
@@ -325,6 +315,7 @@
 // Chamado pela notification do iTunesManager
 -(void)tableUpdate:(NSNotification *)notification{
     dispatch_sync(dispatch_get_main_queue(), ^{ // Sincroniza o método com a main thread.
+//        [NSThread sleepForTimeInterval:2];  // Teste para o UIActivityIndicatorView
         midias = notification.userInfo;
         [_tableview reloadData];
         [loadingAlert dismissWithClickedButtonIndex:0 animated:YES];

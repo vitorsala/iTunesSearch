@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Entity : NSObject
+@interface Midia : NSObject
 
 @property (nonatomic, strong) NSString *tipo;
 @property (nonatomic, strong) NSString *nome;

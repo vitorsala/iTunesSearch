@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Entity.h"
+#import "Midia.h"
 
-@interface Podcast : Entity
+@interface Podcast : Midia
 
 @property (nonatomic, strong) NSString *artista;
 @property (nonatomic, strong) NSString *colecao;

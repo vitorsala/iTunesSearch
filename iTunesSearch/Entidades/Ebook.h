@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Entity.h"
+#import "Midia.h"
 
-@interface Ebook : Entity
+@interface Ebook : Midia
 
 @property (nonatomic, strong) NSString *autor;
 @property (nonatomic, strong) NSString *descricao;

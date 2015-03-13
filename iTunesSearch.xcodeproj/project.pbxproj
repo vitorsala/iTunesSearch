@@ -17,7 +17,8 @@
 		92C21CE11AAE76930052ABE6 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C21CDF1AAE76930052ABE6 /* TableViewCell.m */; };
 		92C21CE21AAE76930052ABE6 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92C21CE01AAE76930052ABE6 /* TableViewCell.xib */; };
 		92C21CE81AAE858E0052ABE6 /* Filme.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C21CE71AAE858E0052ABE6 /* Filme.m */; };
-		EB91B2A11AB0A72200322A9D /* Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = EB91B2A01AB0A72200322A9D /* Entity.m */; };
+		EB33C8881AB394B00040BD6F /* LoadingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EB33C8871AB394B00040BD6F /* LoadingAlert.m */; };
+		EB91B2A11AB0A72200322A9D /* Midia.m in Sources */ = {isa = PBXBuildFile; fileRef = EB91B2A01AB0A72200322A9D /* Midia.m */; };
 		EBC1667E1AAF88AE008F8B05 /* Musica.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC1667D1AAF88AE008F8B05 /* Musica.m */; };
 		EBC166811AAF89A3008F8B05 /* Podcast.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC166801AAF89A3008F8B05 /* Podcast.m */; };
 		EBC166841AAF8A22008F8B05 /* Ebook.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC166831AAF8A22008F8B05 /* Ebook.m */; };
@@ -57,8 +58,10 @@
 		92C21CE01AAE76930052ABE6 /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		92C21CE61AAE858E0052ABE6 /* Filme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Filme.h; path = Entidades/Filme.h; sourceTree = "<group>"; };
 		92C21CE71AAE858E0052ABE6 /* Filme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Filme.m; path = Entidades/Filme.m; sourceTree = "<group>"; };
-		EB91B29F1AB0A72200322A9D /* Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entity.h; sourceTree = "<group>"; };
-		EB91B2A01AB0A72200322A9D /* Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entity.m; sourceTree = "<group>"; };
+		EB33C8861AB394B00040BD6F /* LoadingAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingAlert.h; sourceTree = "<group>"; };
+		EB33C8871AB394B00040BD6F /* LoadingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingAlert.m; sourceTree = "<group>"; };
+		EB91B29F1AB0A72200322A9D /* Midia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Midia.h; sourceTree = "<group>"; };
+		EB91B2A01AB0A72200322A9D /* Midia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Midia.m; sourceTree = "<group>"; };
 		EBC1667C1AAF88AE008F8B05 /* Musica.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Musica.h; path = Entidades/Musica.h; sourceTree = "<group>"; };
 		EBC1667D1AAF88AE008F8B05 /* Musica.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Musica.m; path = Entidades/Musica.m; sourceTree = "<group>"; };
 		EBC1667F1AAF89A3008F8B05 /* Podcast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Podcast.h; path = Entidades/Podcast.h; sourceTree = "<group>"; };
@@ -125,6 +128,8 @@
 				92C21CDC1AAE75DC0052ABE6 /* TableView.xib */,
 				92C21CD91AAE75B30052ABE6 /* iTunesManager.h */,
 				92C21CDA1AAE75B30052ABE6 /* iTunesManager.m */,
+				EB33C8861AB394B00040BD6F /* LoadingAlert.h */,
+				EB33C8871AB394B00040BD6F /* LoadingAlert.m */,
 				92C21CC01AAE757A0052ABE6 /* Images.xcassets */,
 				92C21CB31AAE757A0052ABE6 /* Supporting Files */,
 			);
@@ -181,8 +186,8 @@
 				EBC166801AAF89A3008F8B05 /* Podcast.m */,
 				EBC166821AAF8A22008F8B05 /* Ebook.h */,
 				EBC166831AAF8A22008F8B05 /* Ebook.m */,
-				EB91B29F1AB0A72200322A9D /* Entity.h */,
-				EB91B2A01AB0A72200322A9D /* Entity.m */,
+				EB91B29F1AB0A72200322A9D /* Midia.h */,
+				EB91B2A01AB0A72200322A9D /* Midia.m */,
 			);
 			name = Entidades;
 			sourceTree = "<group>";
@@ -301,7 +306,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB91B2A11AB0A72200322A9D /* Entity.m in Sources */,
+				EB91B2A11AB0A72200322A9D /* Midia.m in Sources */,
+				EB33C8881AB394B00040BD6F /* LoadingAlert.m in Sources */,
 				EBC166841AAF8A22008F8B05 /* Ebook.m in Sources */,
 				92C21CBC1AAE757A0052ABE6 /* TableViewController.m in Sources */,
 				EBC1667E1AAF88AE008F8B05 /* Musica.m in Sources */,

@@ -24,7 +24,7 @@
     NSDictionary *midias = [[iTunesManager sharedInstance] midias];
     NSIndexPath *indexPath = [[iTunesManager sharedInstance] indexPath];
 
-    Entity *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Midia *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
     NSURL *url = [NSURL URLWithString:midia.imgUrl];
     NSData *imgData = [NSData dataWithContentsOfURL:url];

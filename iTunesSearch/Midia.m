@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 joaquim. All rights reserved.
 //
 
-#import "Entity.h"
+#import "Midia.h"
 
-@implementation Entity
+@implementation Midia
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary{
     self = [super init];

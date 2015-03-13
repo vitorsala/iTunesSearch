@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Entity.h"
-@interface Filme : Entity
+#import "Midia.h"
+@interface Filme : Midia
 
 @property (nonatomic, strong) NSString *artista;
 @property (nonatomic, strong) NSString *duracao;
