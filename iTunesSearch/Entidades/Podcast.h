@@ -14,4 +14,7 @@
 @property (nonatomic, strong) NSString *artista;
 @property (nonatomic, strong) NSString *colecao;
 
+
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 @end

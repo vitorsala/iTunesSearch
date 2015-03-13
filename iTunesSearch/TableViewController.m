@@ -25,6 +25,7 @@
     UIAlertView *loadingAlert;
     NSUserDefaults *userDefault;
     void (^setLabelHidden)(TableViewCell *, BOOL);
+    UIActivityIndicatorView *activity;
 }
 
 @end
@@ -42,7 +43,8 @@
     [itunes.notifCenter addObserver:self selector:@selector(tableUpdate:) name:@"iTunesManagerDisFinishedSearch" object:itunes];
 
 
-    loadingAlert = [[UIAlertView alloc]initWithTitle:@"Realizando busca" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+
+
 //    midias = [itunes buscarMidias:@"Apple"];
     _tableview.dataSource = self;
     _tableview.delegate = self;
@@ -64,7 +66,7 @@
 
     userDefault = [NSUserDefaults standardUserDefaults];
     _textoBusca.text = [userDefault objectForKey:@"lastSearch"];
-    _tableview.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+//    _tableview.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
 
 }
 
@@ -278,6 +280,7 @@
 - (IBAction)buscar:(id)sender {
     [self.view endEditing:YES];
     [self tableView:_tableview didDeselectRowAtIndexPath:[_tableview indexPathForSelectedRow]];
+
     iTunesManager *itunes = [iTunesManager sharedInstance];
     NSError *err = nil;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"^[a-z]([a-z]| |\\+|\\(|\\)|'|\\^)*$" options:NSRegularExpressionCaseInsensitive error:&err];
@@ -288,7 +291,6 @@
     NSString *search = _textoBusca.text;
     search = [search stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(![regex numberOfMatchesInString:search options:0 range:NSMakeRange(0, search.length)]){
-
         UIAlertView *fail = [[UIAlertView alloc]initWithTitle:@"Texto inválido" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [fail show];
         return;
@@ -300,12 +302,27 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [itunes buscarMidias:search];
     });
+    [self showAlert];
+}
+
+-(void)showAlert {
+    loadingAlert = [[UIAlertView alloc]initWithTitle:@"Realizando busca" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+
+    activity = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+
+    activity.frame = loadingAlert.bounds;
+//    activity.center = CGPointMake(loadingAlert.bounds.size.width / 2, loadingAlert.bounds.size.height - 50);
+    [loadingAlert addSubview:activity];
+    //    [loadingAlert setValue:activity forKey:@"accessoryView"];
     [loadingAlert show];
+    [activity startAnimating];
+    
 }
 
 
 #pragma mark outros métodos
-
+// Chamado pela notification do iTunesManager
 -(void)tableUpdate:(NSNotification *)notification{
     dispatch_sync(dispatch_get_main_queue(), ^{ // Sincroniza o método com a main thread.
         midias = notification.userInfo;

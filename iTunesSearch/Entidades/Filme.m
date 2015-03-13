@@ -9,5 +9,14 @@
 #import "Filme.h"
 
 @implementation Filme
-
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary{
+    self = [super initWithDictionary:dictionary];
+    if(self){
+        _artista = [dictionary objectForKey:@"artistName"];
+        _duracao = [dictionary objectForKey:@"trackTimeMillis"];
+        _genero = [dictionary objectForKey:@"primaryGenreName"];
+        self.tipo = NSLocalizedString(@"Movie", "Categoria \"Filme\"");
+    }
+    return self;
+}
 @end

@@ -18,4 +18,6 @@
 @property (nonatomic, strong) NSString *data;
 @property (nonatomic, strong) NSString *imgUrl;
 
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 @end

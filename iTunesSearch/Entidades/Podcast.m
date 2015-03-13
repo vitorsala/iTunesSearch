@@ -9,5 +9,14 @@
 #import "Podcast.h"
 
 @implementation Podcast
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary{
+    self = [super initWithDictionary:dictionary];
+    if(self){
+        _artista = [dictionary objectForKey:@"artistName"];
+        _colecao = [dictionary objectForKey:@"primaryGenreName"];
+        self.tipo = NSLocalizedString(@"Podcast", "Categoria \"Podcast\"");
+    }
+    return self;
 
+}
 @end

@@ -14,4 +14,6 @@
 @property (nonatomic, strong) NSString *duracao;
 @property (nonatomic, strong) NSString *genero;
 
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 @end

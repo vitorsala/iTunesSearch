@@ -46,6 +46,7 @@ static bool isFirstAccess = YES;
 
     if(jsonData == nil){
         NSLog(@"Erro ao receber dados do JsonData");
+        [_notifCenter postNotificationName:@"iTunesManagerDisFinishedSearch" object:self userInfo:_midias];
         return;
     }
     NSError *error;
@@ -65,59 +66,26 @@ static bool isFirstAccess = YES;
     NSMutableArray *podcasts = [[NSMutableArray alloc] init];
 
     // Definição do bloco de atribuição de dados compartilhados
-    void (^sharedInfo)(Entity*,NSDictionary *) = ^(Entity *e, NSDictionary *r){
-        [e setNome:[r objectForKey:@"trackName"]];
-        [e setTrackId:[r objectForKey:@"trackId"]];
-        [e setData:[r objectForKey:@"releaseDate"]];
-        [e setPais:[r objectForKey:@"country"]];
-        [e setPreco:[r objectForKey:@"trackPrice"]];
-        [e setImgUrl:[r objectForKey:@"artworkUrl60"]];
-    };
 
     for (NSDictionary *item in resultados) {
         if([[item objectForKey:@"kind"]isEqualToString:@"feature-movie"]){
-            Filme *filme = [[Filme alloc] init];
+            Filme *filme = [[Filme alloc] initWithDictionary:item];
 
-            sharedInfo(filme,item); // Executa o bloco para atribuir dados semelhantes.
-
-            [filme setArtista:[item objectForKey:@"artistName"]];
-            [filme setDuracao:[item objectForKey:@"trackTimeMillis"]];
-            [filme setGenero:[item objectForKey:@"primaryGenreName"]];
-            [filme setTipo:NSLocalizedString(@"Movie", "Categoria \"Filme\"")];
             [filmes addObject:filme];
         }
         if([[item objectForKey:@"kind"]isEqualToString:@"ebook"]){
-            Ebook *ebook = [[Ebook alloc] init];
+            Ebook *ebook = [[Ebook alloc] initWithDictionary:item];
 
-            sharedInfo(ebook,item);
-
-            [ebook setAutor:[item objectForKey:@"artistName"]];
-            [ebook setDescricao:[item objectForKey:@"description"]];
-            [ebook setGeneros:[item objectForKey:@"genres"]];
-            [ebook setPais:[item objectForKey:@"country"]];
-            [ebook setTipo:NSLocalizedString(@"Ebook", "Categoria \"Ebook\"")];
             [ebooks addObject:ebook];
         }
         if([[item objectForKey:@"kind"]isEqualToString:@"song"]){
-            Musica *musica = [[Musica alloc] init];
+            Musica *musica = [[Musica alloc] initWithDictionary:item];
 
-            sharedInfo(musica,item);
-
-            [musica setArtista:[item objectForKey:@"artistName"]];
-            [musica setNumFaixas:[item objectForKey:@"trackCount"]];
-            [musica setNumDaFaixa:[item objectForKey:@"trackNumber"]];
-            [musica setColecao:[item objectForKey:@"collectionName"]];
-            [musica setTipo:NSLocalizedString(@"Music", "Categoria \"Musica\"")];
             [musicas addObject:musica];
         }
         if([[item objectForKey:@"kind"]isEqualToString:@"podcast"]){
-            Podcast *podcast = [[Podcast alloc] init];
+            Podcast *podcast = [[Podcast alloc] initWithDictionary:item];
 
-            sharedInfo(podcast,item);
-
-            [podcast setArtista:[item objectForKey:@"artistName"]];
-            [podcast setColecao:[item objectForKey:@"primaryGenreName"]];
-            [podcast setTipo:NSLocalizedString(@"Podcast", "Categoria \"Podcast\"")];
             [podcasts addObject:podcast];
         }
     }

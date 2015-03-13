@@ -16,4 +16,7 @@
 @property (nonatomic, strong) NSArray *generos;
 @property (nonatomic, strong) NSString *data;
 
+
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
 @end

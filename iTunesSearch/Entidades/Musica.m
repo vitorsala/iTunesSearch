@@ -9,5 +9,15 @@
 #import "Musica.h"
 
 @implementation Musica
-
+-(instancetype)initWithDictionary:(NSDictionary *)dictionary{
+    self = [super initWithDictionary:dictionary];
+    if(self){
+        _artista = [dictionary objectForKey:@"artistName"];
+        _numFaixas = [dictionary objectForKey:@"trackCount"];
+        _numDaFaixa = [dictionary objectForKey:@"trackNumber"];
+        _colecao = [dictionary objectForKey:@"collectionName"];
+        self.tipo = NSLocalizedString(@"Music", "Categoria \"Musica\"");
+    }
+    return self;
+}
 @end
