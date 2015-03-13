@@ -34,8 +34,9 @@ static bool isFirstAccess = YES;
 /*!
  keys: "filmes", "musicas", "ebooks", "podcasts"
  */
-- (NSDictionary *)buscarMidias:(NSString *)termo {
-    NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
+
+- (void)buscarMidias:(NSString *)termo {
+    _midias = [[NSMutableDictionary alloc] init];
     if (!termo) {
         termo = @"";
     }
@@ -45,7 +46,7 @@ static bool isFirstAccess = YES;
 
     if(jsonData == nil){
         NSLog(@"Erro ao receber dados do JsonData");
-        return result;
+        return;
     }
     NSError *error;
     NSDictionary *resultado = [NSJSONSerialization JSONObjectWithData:jsonData
@@ -54,7 +55,7 @@ static bool isFirstAccess = YES;
 
     if (error) {
         NSLog(@"Não foi possível fazer a busca. ERRO: %@", error);
-        return result;
+        return;
     }
 
     NSArray *resultados = [resultado objectForKey:@"results"];
@@ -69,6 +70,7 @@ static bool isFirstAccess = YES;
         [e setTrackId:[r objectForKey:@"trackId"]];
         [e setData:[r objectForKey:@"releaseDate"]];
         [e setPais:[r objectForKey:@"country"]];
+        [e setPreco:[r objectForKey:@"trackPrice"]];
         [e setImgUrl:[r objectForKey:@"artworkUrl60"]];
     };
 
@@ -80,7 +82,6 @@ static bool isFirstAccess = YES;
 
             [filme setArtista:[item objectForKey:@"artistName"]];
             [filme setDuracao:[item objectForKey:@"trackTimeMillis"]];
-            [filme setPreco:[item objectForKey:@"trackPrice"]];
             [filme setGenero:[item objectForKey:@"primaryGenreName"]];
             [filme setTipo:NSLocalizedString(@"Movie", "Categoria \"Filme\"")];
             [filmes addObject:filme];
@@ -120,13 +121,13 @@ static bool isFirstAccess = YES;
             [podcasts addObject:podcast];
         }
     }
+    if([filmes count]>0)    [_midias setObject:filmes forKey:@"filmes"];
+    if([musicas count]>0)    [_midias setObject:musicas forKey:@"musicas"];
+    if([ebooks count]>0)    [_midias setObject:ebooks forKey:@"ebooks"];
+    if([podcasts count]>0)    [_midias setObject:podcasts forKey:@"podcasts"];
 
-    [result setObject:filmes forKey:@"filmes"];
-    [result setObject:musicas forKey:@"musicas"];
-    [result setObject:ebooks forKey:@"ebooks"];
-    [result setObject:podcasts forKey:@"podcasts"];
-
-    return result;
+    [_notifCenter postNotificationName:@"iTunesManagerDisFinishedSearch" object:self userInfo:_midias];
+    return;
 }
 
 #pragma mark - Life Cycle
@@ -165,6 +166,7 @@ static bool isFirstAccess = YES;
         [self doesNotRecognizeSelector:_cmd];
     }
     self = [super init];
+    _notifCenter = [NSNotificationCenter defaultCenter];
     return self;
 }
 

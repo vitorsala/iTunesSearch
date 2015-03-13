@@ -10,6 +10,7 @@
 
 #warning Classe importada para uso no metodo de inicilizacao da App
 #import "TableViewController.h"
+#import <UIKit/UIKit.h>
 
 @interface AppDelegate ()
 
@@ -28,7 +29,8 @@
 #warning Adicionado codigo para iniciar com a interface do TableView
 //    TableViewController *tvc = [[TableViewController alloc] initWithNibName:@"TableView" bundle:nil];
     TableViewController *tvc = [[TableViewController alloc] init];
-    [self.window setRootViewController:tvc];
+    UINavigationController *uinc = [[UINavigationController alloc] initWithRootViewController:tvc];
+    [self.window setRootViewController:uinc];
     [self.window makeKeyAndVisible];
     return YES;
 }

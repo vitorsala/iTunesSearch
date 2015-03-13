@@ -10,12 +10,15 @@
 
 @interface iTunesManager : NSObject
 
+@property NSNotificationCenter *notifCenter;
+@property NSMutableDictionary *midias;
+@property NSIndexPath *indexPath;
 /**
  * gets singleton object.
  * @return singleton
  */
 + (iTunesManager*)sharedInstance;
 
-- (NSDictionary *)buscarMidias:(NSString *)termo;
+- (void)buscarMidias:(NSString *)termo;
 
 @end

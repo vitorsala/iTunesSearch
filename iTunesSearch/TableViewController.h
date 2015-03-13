@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface TableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *view;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UITextField *textoBusca;
 @property (weak, nonatomic) IBOutlet UIButton *btnBuscar;
+
 
 
 - (IBAction)buscar:(id)sender;

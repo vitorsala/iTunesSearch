@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nome;
 @property (weak, nonatomic) IBOutlet UILabel *tipo;
+@property (weak, nonatomic) IBOutlet UILabel *preco;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView;
 @property (weak, nonatomic) IBOutlet UILabel *label01;
 @property (weak, nonatomic) IBOutlet UILabel *label02;
 @property (weak, nonatomic) IBOutlet UILabel *label03;

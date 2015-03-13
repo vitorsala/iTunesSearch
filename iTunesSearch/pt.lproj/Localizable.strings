@@ -1,3 +1,15 @@
+/* Categoria \"Ebook\" */
+"Ebook" = "eBook";
+
+/* Categoria \"Filme\" */
+"Movie" = "Filme";
+
+/* Categoria \"Musica\" */
+"Music" = "Musica";
+
+/* Categoria \"Podcast\" */
+"Podcast" = "Podcast";
+
 /* String para o botão buscar */
 "Search" = "Buscar";
 
