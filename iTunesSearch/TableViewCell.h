@@ -20,4 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *label04;
 @property (weak, nonatomic) IBOutlet UILabel *label05;
 
+-(void)setLabelHidden:(BOOL)hidden;
+
+-(void)setLabelValues:(NSString *)label1 :(NSString *)label2 :(NSString *)label3 :(NSString *)label4 :(NSString *)label5;
+
 @end

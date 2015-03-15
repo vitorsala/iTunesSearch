@@ -14,7 +14,8 @@
 #import "Entidades/Ebook.h"
 #import "Entidades/Musica.h"
 #import "Entidades/Podcast.h"
-#import "LoadingAlert.h"
+//#import "LoadingAlert.h"
+#import "LoadingAlert2View.h"
 
 
 @interface TableViewController () {
@@ -23,10 +24,12 @@
 
     NSString *language;
 
-    LoadingAlert *loadingAlert;
+//    LoadingAlert *loadingAlert;
+    LoadingAlert2View *loadingAlert;
     NSUserDefaults *userDefault;
-    void (^setLabelHidden)(TableViewCell *, BOOL);
-    UIActivityIndicatorView *activity;
+//    void (^setLabelHidden)(TableViewCell *, BOOL);
+
+    NSCache *imgCache;  // Cache simples
 }
 
 @end
@@ -54,20 +57,26 @@
 //#warning Necessario para que a table view tenha um espaco em relacao ao topo, pois caso contrario o texto ficara atras da barra superior
 //    self.tableview.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableview.bounds.size.width, 0.f)];
 
-    setLabelHidden = ^void(TableViewCell* celula, BOOL hidden){
-        [celula label01].hidden = hidden;
-        [celula label02].hidden = hidden;
-        [celula label03].hidden = hidden;
-        [celula label04].hidden = hidden;
-        [celula label05].hidden = hidden;
-    };
+//    setLabelHidden = ^void(TableViewCell* celula, BOOL hidden){
+//        [celula label01].hidden = hidden;
+//        [celula label02].hidden = hidden;
+//        [celula label03].hidden = hidden;
+//        [celula label04].hidden = hidden;
+//        [celula label05].hidden = hidden;
+//    };
 
 
-    loadingAlert = [[LoadingAlert alloc]initWithTitle:@"Realizando busca" message:@"" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+//    loadingAlert = [[LoadingAlert alloc]initWithTitle:@"Realizando busca" message:@"\n" delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    loadingAlert = [[LoadingAlert2View alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) andText:@"Carregando..."];
+    [self.view addSubview:loadingAlert];
+    [self.view bringSubviewToFront:loadingAlert];
+    loadingAlert.layer.zPosition+=10;   // Fazendo com que o view apareça na frente da tableview
 
     userDefault = [NSUserDefaults standardUserDefaults];
     _textoBusca.text = [userDefault objectForKey:@"lastSearch"];
 //    _tableview.contentInset = UIEdgeInsetsMake(-64, 0, 0, 0);
+
+    imgCache = [[NSCache alloc] init];
 
 }
 
@@ -115,9 +124,15 @@
 
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        NSURL *url = [NSURL URLWithString:midia.imgUrl];
-        NSData *imgData = [NSData dataWithContentsOfURL:url];
-        UIImage *img = [UIImage imageWithData:imgData];
+
+        UIImage *img = [imgCache objectForKey:midia.imgUrl];
+
+        if(!img){
+            NSURL *url = [NSURL URLWithString:midia.imgUrl];
+            NSData *imgData = [NSData dataWithContentsOfURL:url];
+            img = [UIImage imageWithData:imgData];
+            [imgCache setObject:img forKey:midia.imgUrl];
+        }
 
         dispatch_sync(dispatch_get_main_queue(), ^{ // Sincroniza o método com a main thread.
             [celula.imgView setImage:img];
@@ -170,10 +185,10 @@
                         );
 
         }
-        setLabelHidden(celula,NO);
+        [celula setLabelHidden:NO];
     }
     else{
-        setLabelHidden(celula,YES);
+        [celula setLabelHidden:YES];
     }
     
     return celula;
@@ -192,7 +207,6 @@
     if(selectedRow && indexPath.row == selectedRow.row && indexPath.section == selectedRow.section){
         [self tableView:tableView didDeselectRowAtIndexPath:indexPath];
 //        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
 
         infoViewController *infoView = [[infoViewController alloc] init];
         
@@ -214,51 +228,43 @@
 
         Midia *midia = [[midias objectForKey:[[midias allKeys] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
 
-        void (^sharedLabel)(NSString*, NSString*, NSString*) = ^void(NSString* lbl1, NSString* lbl2, NSString* lbl3){
-            cell.label03.text = lbl1;
-            cell.label04.text = lbl2;
-            cell.label05.text = lbl3;
-        };
+        NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:midia.pais, midia.data, nil];
 
-        cell.label01.text = midia.pais;
-        cell.label02.text = midia.data;
         if([midia isKindOfClass:[Filme class]]){
             Filme *e = (Filme *)midia;
-            sharedLabel(
-                        e.genero,
-                        e.artista,
-                        [NSString stringWithFormat:@"%@",e.duracao]
-                        );
+            [values addObject:e.genero];
+            [values addObject:e.artista];   
+            NSDate *time = [[NSDate alloc] initWithTimeIntervalSince1970:[(NSNumber *)e.duracao doubleValue]];
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            [values addObject:[format stringFromDate:time]];
+
         }
         if([midia isKindOfClass:[Musica class]]){
             Musica *e = (Musica *)midia;
-            sharedLabel(
-                        e.colecao,
-                        e.artista,
-                        [NSString stringWithFormat:@"%@",e.numDaFaixa]
-                        );
+            [values addObject:e.colecao];
+            [values addObject:e.artista];
+            [values addObject:[NSString stringWithFormat:@"%@",e.numDaFaixa]];
 
         }
         if([midia isKindOfClass:[Ebook class]]){
             Ebook *e = (Ebook *)midia;
-            sharedLabel(
-                        e.autor,
-                        [e.generos firstObject],
-                        e.descricao
-                        );
+
+            [values addObject:e.autor];
+            [values addObject:[e.generos firstObject]];
+            [values addObject:e.descricao];
+
 
         }
         if([midia isKindOfClass:[Podcast class]]){
             Podcast *e = (Podcast *)midia;
-            sharedLabel(
-                        e.artista,
-                        e.colecao,
-                        e.trackId
-                        );
-            
-        }
+            [values addObject:e.artista];
+            [values addObject:e.colecao];
+            [values addObject:e.trackId];
 
-        setLabelHidden(cell,NO);
+        }
+        [cell setLabelValues:[values objectAtIndex:0] :[values objectAtIndex:1] :[values objectAtIndex:2] :[values objectAtIndex:3] :[values objectAtIndex:4]];
+
+        [cell setLabelHidden:NO];
 
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -270,8 +276,7 @@
     selectedRow = nil;
     if([midias count] > 0){
         TableViewCell *cell = (TableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-
-        setLabelHidden(cell,YES);
+        [cell setLabelHidden:YES];
 
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -289,6 +294,7 @@
         NSLog(@"Error REGEX");
         return;
     }
+
     NSString *search = _textoBusca.text;
     search = [search stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(![regex numberOfMatchesInString:search options:0 range:NSMakeRange(0, search.length)]){
@@ -296,6 +302,7 @@
         [fail show];
         return;
     }
+    
     [userDefault setValue:search forKey:@"lastSearch"];
     search = [search stringByReplacingOccurrencesOfString:@" " withString:@"+"];
 
@@ -315,10 +322,11 @@
 // Chamado pela notification do iTunesManager
 -(void)tableUpdate:(NSNotification *)notification{
     dispatch_sync(dispatch_get_main_queue(), ^{ // Sincroniza o método com a main thread.
-//        [NSThread sleepForTimeInterval:2];  // Teste para o UIActivityIndicatorView
+        [NSThread sleepForTimeInterval:5];  // Teste para o UIActivityIndicatorView
         midias = notification.userInfo;
         [_tableview reloadData];
-        [loadingAlert dismissWithClickedButtonIndex:0 animated:YES];
+//        [loadingAlert dismissWithClickedButtonIndex:0 animated:YES];
+        [loadingAlert hide];
     });
 }
 @end

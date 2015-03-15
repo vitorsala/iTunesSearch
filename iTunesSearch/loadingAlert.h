@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/*!
+ DEPRECATED CLASS
+ Classe para alerta de atividade.
+ Não ficou bom!
+ 
+ Usar LoadingAlert2View!
+ */
+__attribute__((deprecated))
 @interface LoadingAlert : UIAlertView
 
 @end
