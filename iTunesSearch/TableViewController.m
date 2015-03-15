@@ -322,7 +322,7 @@
 // Chamado pela notification do iTunesManager
 -(void)tableUpdate:(NSNotification *)notification{
     dispatch_sync(dispatch_get_main_queue(), ^{ // Sincroniza o método com a main thread.
-        [NSThread sleepForTimeInterval:5];  // Teste para o UIActivityIndicatorView
+//        [NSThread sleepForTimeInterval:5];  // Teste para o UIActivityIndicatorView
         midias = notification.userInfo;
         [_tableview reloadData];
 //        [loadingAlert dismissWithClickedButtonIndex:0 animated:YES];
