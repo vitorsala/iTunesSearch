@@ -11,14 +11,14 @@
 "eBook" = "eBook";
 
 /* Categoria \"Filme\" */
-"Movie" = "Filme";
+"Movie" = "Movie";
 
 /* Categoria \"Musica\" */
-"Music" = "Musica";
+"Music" = "Music";
 
 /* Categoria \"Podcast\" */
 "Podcast" = "Podcast";
 
 /* String para o botão buscar */
-"Search" = "Buscar";
+"Search" = "Search";
 

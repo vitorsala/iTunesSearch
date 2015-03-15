@@ -1,3 +1,24 @@
+/*
+  Localizable.strings
+  iTunesSearch
+
+  Created by Vitor Kawai Sala on 15/03/15.
+  Copyright (c) 2015 joaquim. All rights reserved.
+*/
+
+
+/* Categoria \"Ebook\" */
+"eBook" = "eBook";
+
+/* Categoria \"Filme\" */
+"Movie" = "Films";
+
+/* Categoria \"Musica\" */
+"Music" = "Musique";
+
+/* Categoria \"Podcast\" */
+"Podcast" = "Podcast";
+
 /* String para o botão buscar */
 "Search" = "Recherche";
 

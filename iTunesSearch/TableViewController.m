@@ -142,49 +142,42 @@
 
     if(selectedRow && indexPath.row == selectedRow.row && indexPath.section == selectedRow.section){
 
-        void (^sharedLabel)(NSString*, NSString*, NSString*) = ^void(NSString* lbl1, NSString* lbl2, NSString* lbl3){
-            celula.label03.text = lbl1;
-            celula.label04.text = lbl2;
-            celula.label05.text = lbl3;
-        };
+        NSMutableArray *values = [[NSMutableArray alloc] initWithObjects:midia.pais, midia.data, nil];
 
-        celula.label01.text = midia.pais;
-        celula.label02.text = midia.data;
         if([midia isKindOfClass:[Filme class]]){
             Filme *e = (Filme *)midia;
-            sharedLabel(
-                        e.genero,
-                        e.artista,
-                        [NSString stringWithFormat:@"%@",e.duracao]
-            );
+            [values addObject:e.genero];
+            [values addObject:e.artista];
+            NSDate *time = [[NSDate alloc] initWithTimeIntervalSince1970:[(NSNumber *)e.duracao doubleValue]];
+            NSDateFormatter *format = [[NSDateFormatter alloc] init];
+            [values addObject:[format stringFromDate:time]];
+
         }
         if([midia isKindOfClass:[Musica class]]){
             Musica *e = (Musica *)midia;
-            sharedLabel(
-                        e.colecao,
-                        e.artista,
-                        [NSString stringWithFormat:@"%@",e.numDaFaixa]
-                        );
+            [values addObject:e.colecao];
+            [values addObject:e.artista];
+            [values addObject:[NSString stringWithFormat:@"%@",e.numDaFaixa]];
 
         }
         if([midia isKindOfClass:[Ebook class]]){
             Ebook *e = (Ebook *)midia;
-            sharedLabel(
-                        e.autor,
-                        [e.generos firstObject],
-                        e.descricao
-                        );
+
+            [values addObject:e.autor];
+            [values addObject:[e.generos firstObject]];
+            [values addObject:e.descricao];
+
 
         }
         if([midia isKindOfClass:[Podcast class]]){
             Podcast *e = (Podcast *)midia;
-            sharedLabel(
-                        e.artista,
-                        e.colecao,
-                        e.trackId
-                        );
+            [values addObject:e.artista];
+            [values addObject:e.colecao];
+            [values addObject:e.trackId];
 
         }
+        [celula setLabelValues:[values objectAtIndex:0] :[values objectAtIndex:1] :[values objectAtIndex:2] :[values objectAtIndex:3] :[values objectAtIndex:4]];
+
         [celula setLabelHidden:NO];
     }
     else{

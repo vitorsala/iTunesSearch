@@ -15,7 +15,7 @@
         _autor = [dictionary objectForKey:@"artistName"];
         _descricao = [dictionary objectForKey:@"description"];
         _generos = [dictionary objectForKey:@"genres"];
-        self.tipo = NSLocalizedString(@"Ebook", "Categoria \"Ebook\"");
+        self.tipo = NSLocalizedString(@"eBook", "Categoria \"Ebook\"");
     }
     return self;
 }
